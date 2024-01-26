@@ -6,6 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 
@@ -17,6 +23,7 @@ public class OrderForm extends JFrame {
     private JComboBox<String> typeList, windows_packageList, windowsill_widthList, low_tide_widthList;
     private SpinnerNumberModel windows_heightModel, windows_widthModel1, windows_widthModel2, windows_widthModel3, windows_widthModel4;
     private JSpinner windows_height, windows_width1, windows_width2, windows_width3, windows_width4;
+    private JButton send_button, export_button;
 
     
     public String getTypeList(JComboBox<String>typeList) {
@@ -240,4 +247,86 @@ public class OrderForm extends JFrame {
         send_button.addActionListener(new ButtonEventManager());
 
     }
+
+    ActionListener AListener1 = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            OrderForm orderForm = new OrderForm();
+            WindowCalculator windowCalculator = new WindowCalculator();
+            String result_type = orderForm.getTypeList(typeList);
+            int width = 0;
+            if (result_type == "Односекционное") {width = (Integer) windows_width1.getValue();}
+            if (result_type == "Двухсекционные") {width = (Integer) windows_width2.getValue();}
+            if (result_type == "Трехсекционные") {width = (Integer) windows_width3.getValue();}
+            if (result_type == "Четырехсекционные") {width = (Integer) windows_width4.getValue();}
+            String result_windows_package = orderForm.getWindowsPackageList(windows_packageList);
+            String result_low_tide_width = orderForm.getLowTideWidthList(low_tide_widthList);
+            String result_windowsill_width = orderForm.getLowTideWidthList(windowsill_widthList);
+            int height = orderForm.getWindowsHeight(windows_height);
+            int price = windowCalculator.calculatePrice(height,width,result_type, result_windows_package,result_low_tide_width, result_windowsill_width);
+
+            ZonedDateTime now = ZonedDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd.MM.yyyy в HH:mm:ss");
+
+            String content = "Экспорт от: " + now.format(formatter) +
+                    "\n\nТип окна: " + result_type +
+                    "\nВысота (мм): " + height +
+                    "\nДлина (мм): " + width +
+                    "\nСтеклопакет: " + result_windows_package +
+                    "\nШирина подоконника: " + result_windowsill_width +
+                    "\nШирина отлива: " + result_low_tide_width +
+                    "\n\nЦена: "+ price  +" руб.";
+            File file = new File("LastExport.txt");
+            FileWriter fw = null;
+            try {
+                fw = new FileWriter(file.getAbsoluteFile());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            BufferedWriter bw = new BufferedWriter(fw);
+            try {
+                bw.write(content);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                bw.close(); // Be sure to close BufferedWriter
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    };
+    
+    class ButtonEventManager implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	
+        	OrderForm orderForm = new OrderForm();
+        	WindowCalculator windowCalculator = new WindowCalculator();
+        	String result_type = orderForm.getTypeList(typeList);
+            int width = 0;
+            if (result_type == "Односекционное") {width = (Integer) windows_width1.getValue();}
+            if (result_type == "Двухсекционные") {width = (Integer) windows_width2.getValue();}
+            if (result_type == "Трехсекционные") {width = (Integer) windows_width3.getValue();}
+            if (result_type == "Четырехсекционные") {width = (Integer) windows_width4.getValue();}
+        	String result_windows_package = orderForm.getWindowsPackageList(windows_packageList);
+        	String result_low_tide_width = orderForm.getLowTideWidthList(low_tide_widthList);
+        	String result_windowsill_width = orderForm.getLowTideWidthList(windowsill_widthList);
+        	int height = orderForm.getWindowsHeight(windows_height);
+        	int price = windowCalculator.calculatePrice(height,width,result_type, result_windows_package,result_low_tide_width, result_windowsill_width);
+            JOptionPane.showMessageDialog(null,
+                    "Тип окна: " + result_type +
+                            "\nВысота (мм): " + height +
+                            "\nДлина (мм): " + width +
+                            "\nСтеклопакет: " + result_windows_package +
+                            "\nШирина подоконника: " + result_windowsill_width +
+                            "\nШирина отлива: " + result_low_tide_width +
+                            "\n\nЦена: "+ price  +" руб.",
+                            "Расчет стоисмости",
+                            JOptionPane.PLAIN_MESSAGE);
+        }
+        
+    }
+
 }
