@@ -33,4 +33,15 @@ public class WindowCalculatorTest {
         assertEquals(3, result2.second);
     }
 
+    @Test
+    public void testGetWindowsillPrice() {
+        WindowCalculator calculator = new WindowCalculator();
+
+        int windowsillPrice1 = calculator.getWindowsillPrice("250 мм");
+        assertEquals(400, windowsillPrice1);
+
+        int windowsillPrice2 = calculator.getWindowsillPrice("400 мм");
+        assertEquals(616, windowsillPrice2);
+    }
+
 }
