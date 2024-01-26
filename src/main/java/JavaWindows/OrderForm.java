@@ -123,5 +123,121 @@ public class OrderForm extends JFrame {
 
         export_button.setBounds(300,510,150,30);
         send_button.setBounds(470,510,100,30);
+
+        class ItemChangeListener implements ItemListener {
+
+            public void removeElements() {
+                container.remove(label_parameters);
+
+                container.remove(image1);
+                container.remove(image2);
+                container.remove(image3);
+                container.remove(image4);
+                container.remove(label_windows_height);
+                container.remove(windows_height);
+                container.remove(label_windows_width);
+                container.remove(windows_width1);
+                container.remove(windows_width2);
+                container.remove(windows_width3);
+                container.remove(windows_width4);
+
+                container.remove(label_options);
+
+                container.remove(label_windows_package);
+                container.remove(windows_packageList);
+
+                container.remove(label_windowsill_width);
+                container.remove(windowsill_widthList);
+
+                container.remove(label_low_tide_width);
+                container.remove(low_tide_widthList);
+
+                container.remove(export_button);
+                container.remove(send_button);
+
+                container.revalidate();
+                container.repaint();
+            }
+
+            public void addElements(int num) {
+                container.add(label_parameters);
+
+                if (num == 1) {container.add(image3);}
+                if (num == 2) {container.add(image2); container.add(image3);}
+                if (num == 3) {container.add(image2); container.add(image3); container.add(image4);}
+                if (num == 4) {container.add(image1); container.add(image2); container.add(image3); container.add(image4);}
+                
+                container.add(label_windows_height);
+                container.add(windows_height);
+                container.add(label_windows_width);
+
+                if (num == 1) {
+                    container.remove(windows_width1);
+                    container.remove(windows_width2);
+                    container.remove(windows_width3);
+                    container.remove(windows_width4);
+                    container.add(windows_width1);
+                }
+                if (num == 2) {
+                    container.remove(windows_width1);
+                    container.remove(windows_width2);
+                    container.remove(windows_width3);
+                    container.remove(windows_width4);
+                    container.add(windows_width2);
+                }
+                if (num == 3) {
+                    container.remove(windows_width1);
+                    container.remove(windows_width2);
+                    container.remove(windows_width3);
+                    container.remove(windows_width4);
+                    container.add(windows_width3);
+                }
+                if (num == 4) {
+                    container.remove(windows_width1);
+                    container.remove(windows_width2);
+                    container.remove(windows_width3);
+                    container.remove(windows_width4);
+                    container.add(windows_width4);
+                }
+
+                container.add(label_options);
+
+                container.add(label_windows_package);
+                container.add(windows_packageList);
+
+                container.add(label_windowsill_width);
+                container.add(windowsill_widthList);
+
+                container.add(label_low_tide_width);
+                container.add(low_tide_widthList);
+
+                container.add (export_button);
+                container.add (send_button);
+
+                container.revalidate();
+                container.repaint();
+            }
+
+                @Override
+                public void itemStateChanged(ItemEvent event) {
+                    if (event.getStateChange() == ItemEvent.SELECTED) {
+                        Object item = event.getItem();
+
+                        if (item == typeTitles[0]) {removeElements();}
+                        if (item == typeTitles[1]) {addElements(1);}
+                        if (item == typeTitles[2]) {addElements(2);}
+                        if (item == typeTitles[3]) {addElements(3);}
+                        if (item == typeTitles[4]) {addElements(4);}
+                    }
+                }
+
+            }
+            
+        typeList.addItemListener(new ItemChangeListener());
+
+        export_button.addActionListener(AListener1);
+
+        send_button.addActionListener(new ButtonEventManager());
+
     }
 }
