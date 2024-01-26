@@ -48,7 +48,7 @@ public class OrderForm extends JFrame {
         super.setBounds(650, 250, 600, 600);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setResizable(false);
-        Image img = Toolkit.getDefaultToolkit().getImage("logo.png");
+        Image img = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("logo.png"));
         super.setIconImage (img);
         Container container = super.getContentPane();
         container.setLayout(null);
@@ -60,7 +60,7 @@ public class OrderForm extends JFrame {
 
         label_parameters = new JLabel("Задайте параметры: ");
 
-        image_window = new ImageIcon("window.png");
+        image_window = new ImageIcon(getClass().getClassLoader().getResource("window.png"));
         image1 = new JLabel(image_window);
         image2 = new JLabel(image_window);
         image3 = new JLabel(image_window);
