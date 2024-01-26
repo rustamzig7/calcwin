@@ -44,4 +44,18 @@ public class WindowCalculatorTest {
         assertEquals(616, windowsillPrice2);
     }
 
+    @Test
+    public void testGetLowTideWidthPrice() {
+        WindowCalculator calculator = new WindowCalculator();
+
+        // Test case 1
+        int lowTideWidthPrice1 = calculator.getLowTideWidthPrice("120 мм");
+        assertEquals(116, lowTideWidthPrice1);
+
+        // Test case 2
+        int lowTideWidthPrice2 = calculator.getLowTideWidthPrice("180 мм");
+        assertEquals(154, lowTideWidthPrice2);
+    }
+
+
 }
