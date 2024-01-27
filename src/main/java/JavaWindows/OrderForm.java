@@ -169,9 +169,9 @@ public class OrderForm extends JFrame {
             public void addElements(int num) {
                 container.add(label_parameters);
 
-                if (num == 1) {container.add(image3);}
-                if (num == 2) {container.add(image2); container.add(image3);}
-                if (num == 3) {container.add(image2); container.add(image3); container.add(image4);}
+                if (num == 1) {container.add(image3);container.remove(image2);container.remove(image1);container.remove(image1);}
+                if (num == 2) {container.add(image2); container.add(image3);container.remove(image1);container.remove(image4);}
+                if (num == 3) {container.add(image2); container.add(image3); container.add(image4);container.remove(image1);}
                 if (num == 4) {container.add(image1); container.add(image2); container.add(image3); container.add(image4);}
                 
                 container.add(label_windows_height);

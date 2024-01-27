@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Built-By: Rustam Ziganshin
+Build-Jdk: 21.0.1
+Main-Class: JavaWindows.Main
+Created-By: Maven Integration for Eclipse
+
