@@ -13,15 +13,49 @@ public class WindowCalculatorTest {
     public void testGetResultTypeInt() {
         WindowCalculator calculator = new WindowCalculator();
 
-        // Test case 1
         int resultTypeInt1 = calculator.getResultTypeInt("Односекционное");
         assertEquals(1, resultTypeInt1);
 
-        // Test case 2
         int resultTypeInt2 = calculator.getResultTypeInt("Трехсекционные");
         assertEquals(3, resultTypeInt2);
     }
 
+    @Test
+    public void testGetHeightAndWidthPrice() {
+        WindowCalculator calculator = new WindowCalculator();
+
+        Pair result1 = calculator.getHeightAndWidthPrice("Эконом");
+        assertEquals(1, result1.first);
+        assertEquals(2, result1.second);
+
+        Pair result2 = calculator.getHeightAndWidthPrice("Премиум");
+        assertEquals(3, result2.first);
+        assertEquals(3, result2.second);
+    }
+
+    @Test
+    public void testGetWindowsillPrice() {
+        WindowCalculator calculator = new WindowCalculator();
+
+        int windowsillPrice1 = calculator.getWindowsillPrice("250 мм");
+        assertEquals(400, windowsillPrice1);
+
+        int windowsillPrice2 = calculator.getWindowsillPrice("400 мм");
+        assertEquals(616, windowsillPrice2);
+    }
+
+    @Test
+    public void testGetLowTideWidthPrice() {
+        WindowCalculator calculator = new WindowCalculator();
+
+        // Test case 1
+        int lowTideWidthPrice1 = calculator.getLowTideWidthPrice("120 мм");
+        assertEquals(116, lowTideWidthPrice1);
+
+        // Test case 2
+        int lowTideWidthPrice2 = calculator.getLowTideWidthPrice("180 мм");
+        assertEquals(154, lowTideWidthPrice2);
+    }
 
 
 }
